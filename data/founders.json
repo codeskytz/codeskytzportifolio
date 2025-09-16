@@ -1,0 +1,18 @@
+[
+  {
+    "id": "f1",
+    "name": "Ava K.",
+    "role": "CEO",
+    "bio": "Product & strategy lead with 10+ years building digital platforms.",
+    "image": "/logo192.png",
+    "social": {"github":"#","linkedin":"#"}
+  },
+  {
+    "id": "f2",
+    "name": "Ravi M.",
+    "role": "CTO",
+    "bio": "Systems architect and ML engineer.",
+    "image": "/logo192.png",
+    "social": {"github":"#","linkedin":"#"}
+  }
+]
