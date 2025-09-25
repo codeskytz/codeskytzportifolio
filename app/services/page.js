@@ -1,21 +1,21 @@
+import ServiceCard from '../../components/ServiceCard'
+import { WhatsappLogo, AiLogo, WebLogo, ShieldLogo, ApiLogo } from '../../lib/serviceLogos'
+
 export default function ServicesPage(){
   const services = [
-    {title:'Web Development', desc:'Web apps, SPA/SSR'},
-    {title:'System Security', desc:'Pen tests, hardening'},
-    {title:'AI Solutions', desc:'Models, integrations'},
-    {title:'WhatsApp Bot Automation', desc:'Chatbots, flows'},
-    {title:'API Services', desc:'Design and integration'}
+    {title:'WhatsApp Bot Automation', desc:'Chatbots, flows and automations on WhatsApp', slug:'whatsapp-bot', color:'#25D366', logo:<WhatsappLogo/>},
+    {title:'AI Solutions', desc:'Custom models and AI integrations', slug:'ai-solutions', color:'#7C3AED', logo:<AiLogo/>},
+    {title:'Web Development', desc:'Web apps, SPA/SSR and modern frontends', slug:'web-development', color:'#2563EB', logo:<WebLogo/>},
+    {title:'System Security', desc:'Pen tests, hardening and secure design', slug:'system-security', color:'#0EA5A4', logo:<ShieldLogo/>},
+    {title:'API Services', desc:'Design, implementation and integration', slug:'api-services', color:'#8B5CF6', logo:<ApiLogo/>}
   ]
 
   return (
     <section id="services" className="py-12">
-      <h2 className="text-2xl font-semibold mb-4">Services</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <h2 className="text-2xl font-semibold mb-6">Services</h2>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {services.map(s=> (
-          <div key={s.title} className="p-4 border rounded bg-white dark:bg-slate-900">
-            <h3 className="font-bold">{s.title}</h3>
-            <p className="text-sm text-slate-600 dark:text-slate-300">{s.desc}</p>
-          </div>
+          <ServiceCard key={s.slug} service={s} />
         ))}
       </div>
     </section>
