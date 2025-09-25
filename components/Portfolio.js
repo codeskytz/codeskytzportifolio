@@ -1,22 +1,26 @@
-import projects from '../data/portfolio.json'
-
 export default function Portfolio(){
+  const frames = [
+    {id:1, title:'Personal portifolio', src:'https://mrshitcointz.vercel.app/'},
+    {id:2, title:'SaaS dashboard', src:'https://mrshitcointz.vercel.app/'},
+    {id:3, title:'Marketing site', src:'https://anagroupsupplies.vercel.app/'},
+    {id:4, title:'Web app showcase', src:'https://mrshitcointz.vercel.app/'}
+  ]
+
   return (
-    <section id="portfolio" className="py-12">
-      <h2 className="text-2xl font-semibold mb-4">Portfolio</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {projects.map(p=> (
-          <article key={p.id} className="border rounded p-4 bg-white dark:bg-slate-900">
-            <h3 className="font-bold">{p.title}</h3>
-            <p className="text-sm text-slate-600 dark:text-slate-300">{p.summary}</p>
-            <div className="mt-2 flex gap-2 flex-wrap">
-              {p.tags.map(t=> <span key={t} className="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded">{t}</span>)}
+    <section id="our-works" className="py-12">
+      <h2 className="text-2xl font-semibold mb-6">Our Works</h2>
+      <p className="text-gray-600 mb-6">A selection of interactive demos and live sites we've built. Click to explore.</p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {frames.map(f=> (
+          <div key={f.id} className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-lg transform hover:scale-102 transition duration-400 border-2 border-gray-100 dark:border-slate-800">
+            <div className="p-4 border-b border-gray-100 dark:border-slate-800">
+              <h3 className="font-semibold">{f.title}</h3>
             </div>
-            <div className="mt-4 flex gap-2">
-              {p.live && <a href={p.live} target="_blank" rel="noreferrer" className="text-cyan">Live</a>}
-              {p.github && <a href={p.github} target="_blank" rel="noreferrer">GitHub</a>}
+            <div className="aspect-video">
+              <iframe src={f.src} title={f.title} className="w-full h-full border-none" loading="lazy" />
             </div>
-          </article>
+          </div>
         ))}
       </div>
     </section>
