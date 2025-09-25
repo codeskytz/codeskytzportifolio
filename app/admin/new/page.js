@@ -1,6 +1,6 @@
 "use client"
-import { useState } from 'react'
-import { db, collection, addDoc, serverTimestamp } from '../../../lib/firebaseClient'
+import { useState, useEffect } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 
 export default function NewProject(){
   const [title, setTitle] = useState('')
@@ -20,6 +20,22 @@ export default function NewProject(){
     // insecure for production; this is only per your request for quick testing.
     const apiKey = process.env.NEXT_PUBLIC_IMGBB_API || process.env.NEXT_IMGBB_API || '8a402848056a5c86e392b765263065e0'
   const [errorMsg, setErrorMsg] = useState('')
+  const params = useSearchParams()
+  const router = useRouter()
+  const editId = params.get('id')
+
+  useEffect(()=>{
+    if(!editId) return
+    // load project for edit
+    fetch('/api/projects/'+editId).then(r=>r.json()).then(j=>{
+      setTitle(j.title||'')
+      setSummary(j.summary||'')
+      setSelectedTechs(j.tags||j.techs||[])
+      setLive(j.live||'')
+      if(j.front) setFrontImage(j.front)
+      if(j.gallery) setImages(j.gallery)
+    }).catch(()=>{})
+  },[editId])
 
   function toggleTech(t){
     setSelectedTechs(s => s.includes(t)? s.filter(x=>x!==t): [...s,t])
@@ -116,18 +132,24 @@ export default function NewProject(){
         console.warn(`Skipping gallery index ${i} - no file or base64 data available`)
       }
 
-      // Save metadata to Firestore
-      const doc = await addDoc(collection(db, 'projects'), {
-        title, summary, techs: selectedTechs, front: frontUrl, gallery, live, createdAt: serverTimestamp()
-      })
-
-      alert('Project created')
-      setTitle('')
-      setSummary('')
-      setSelectedTechs([])
-      setFrontImage(null)
-      setImages([])
-      setLive('')
+      // Save metadata to server API which persists to data/portfolio.json
+      const payload = { title, summary, techs: selectedTechs, front: frontUrl, gallery, live }
+      let res
+      if(editId){
+        res = await fetch('/api/projects/'+editId, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      } else {
+        res = await fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      }
+      if(!res.ok) throw new Error('Failed to save project')
+      const created = await res.json()
+      alert(editId ? 'Project updated' : 'Project created: ' + (created.id || created.title || 'ok'))
+  setTitle('')
+  setSummary('')
+  setSelectedTechs([])
+  setFrontImage(null)
+  setImages([])
+  setLive('')
+  if(editId) router.push('/admin')
     }catch(err){
       console.error(err)
       const m = err?.message || String(err)

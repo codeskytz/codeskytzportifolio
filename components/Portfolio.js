@@ -1,8 +1,20 @@
-import projects from '../data/portfolio.json'
+"use client"
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function Portfolio(){
+  const [projects, setProjects] = useState([])
+
+  useEffect(()=>{
+    let mounted = true
+    fetch('/api/projects')
+      .then(r=> r.json())
+      .then(data=>{ if(mounted) setProjects(data) })
+      .catch(()=>{})
+    return ()=>{ mounted = false }
+  },[])
+
   return (
     <section id="our-works" className="py-12">
       <h2 className="text-2xl font-semibold mb-6">Our Works</h2>
@@ -12,7 +24,12 @@ export default function Portfolio(){
         {projects.map(p=> (
           <article key={p.id} className="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 shadow-lg border-2 border-gray-100 dark:border-slate-800">
             <div className="relative w-full h-56 sm:h-64">
-              <Image src={`/images/projects/${p.id}.jpg`} alt={p.title} fill className="object-cover" placeholder="blur" blurDataURL="/images/placeholder.png" />
+              {p.front && (p.front.includes('ibb.co') || p.front.includes('imgbb.com')) ? (
+                // imgbb-hosted images: render with standard img to avoid next/image optimisation/network issues
+                <img src={p.front} alt={p.title} className="w-full h-full object-cover" />
+              ) : (
+                <Image src={p.front || `/images/projects/${p.id}.jpg`} alt={p.title} fill className="object-cover" placeholder="blur" blurDataURL="/images/placeholder.png" />
+              )}
             </div>
             <div className="p-5">
               <h3 className="text-lg font-semibold">{p.title}</h3>
