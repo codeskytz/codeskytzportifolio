@@ -15,6 +15,9 @@ export default function AdminDashboard(){
   const [projects, setProjects] = useState([])
   const [founders, setFounders] = useState([])
   const [comments, setComments] = useState([])
+  const [ads, setAds] = useState([])
+  const [newAdUrl, setNewAdUrl] = useState('')
+  const [newAdAlt, setNewAdAlt] = useState('')
 
   useEffect(()=>{
     try{ setAuthed(sessionStorage.getItem('codesky_admin') === '1') }catch(e){ setAuthed(false) }
@@ -25,6 +28,7 @@ export default function AdminDashboard(){
     fetchJSON('/api/projects').then(setProjects)
     fetchJSON('/api/founders').then(setFounders)
     fetchJSON('/api/comments').then(setComments)
+  fetchJSON('/api/ads').then(setAds)
     // poll comments every 10s so newly submitted reviews appear
     const iv = setInterval(()=>fetchJSON('/api/comments').then(setComments), 10000)
     return ()=>clearInterval(iv)
@@ -55,6 +59,25 @@ export default function AdminDashboard(){
     const res = await fetch('/api/founders/'+id, { method: 'DELETE' })
     if(!res.ok) return alert('Failed to delete founder')
     setFounders(f=>f.filter(x=>x.id!==id))
+  }
+
+  async function createAd(){
+    if(!newAdUrl) return alert('Provide image URL')
+    try{
+      const res = await fetch('/api/ads', { method: 'POST', headers: { 'Content-Type':'application/json' }, body: JSON.stringify({ url: newAdUrl, alt: newAdAlt }) })
+      if(!res.ok) throw new Error('create failed')
+      const j = await res.json()
+      setAds(a=>[j.data, ...a])
+      setNewAdUrl('')
+      setNewAdAlt('')
+    }catch(e){ console.error(e); alert('Failed to create ad') }
+  }
+
+  async function deleteAd(id){
+    if(!confirm('Delete ad?')) return
+    const res = await fetch('/api/ads/'+id, { method: 'DELETE' })
+    if(!res.ok) return alert('Failed to delete ad')
+    setAds(a=>a.filter(x=>x.id!==id))
   }
 
   return (
