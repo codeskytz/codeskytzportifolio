@@ -213,7 +213,7 @@ export default function NewProject(){
         <input value={live} onChange={e=>setLive(e.target.value)} placeholder="Live URL" className="w-full p-2 border rounded" />
 
         <div className="flex justify-end">
-          <button type="submit" disabled={loading} className="px-4 py-2 rounded bg-indigo-600 text-white">{loading? 'Uploading...':'Create'}</button>
+          <button type="submit" disabled={loading} className="px-4 py-2 rounded bg-indigo-600 text-white fast-action">{loading? 'Uploading...':'Create'}</button>
         </div>
       </form>
     </div>

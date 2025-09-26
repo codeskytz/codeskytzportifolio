@@ -38,7 +38,7 @@ export default function AdminLogin(){
         {err && <p className="mt-3 text-sm text-red-600">{err}</p>}
 
         <div className="mt-5 flex justify-end">
-          <button type="submit" className="px-4 py-2 rounded bg-indigo-600 text-white">Sign in</button>
+          <button type="submit" className="px-4 py-2 rounded bg-indigo-600 text-white fast-action">Sign in</button>
         </div>
       </form>
     </div>

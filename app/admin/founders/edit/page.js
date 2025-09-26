@@ -41,7 +41,7 @@ export default function EditFounder(){
         <input value={image} onChange={e=>setImage(e.target.value)} placeholder="Image URL" className="w-full p-2 border rounded" />
         <textarea value={story} onChange={e=>setStory(e.target.value)} placeholder="Short story" className="w-full p-2 border rounded" />
         <div className="flex justify-end">
-          <button type="submit" className="px-4 py-2 rounded bg-indigo-600 text-white">Save</button>
+          <button type="submit" className="px-4 py-2 rounded bg-indigo-600 text-white fast-action">Save</button>
         </div>
       </form>
     </div>
