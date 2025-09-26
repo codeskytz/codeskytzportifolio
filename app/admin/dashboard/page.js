@@ -47,6 +47,13 @@ export default function AdminDashboard(){
     setComments(c=>c.filter(x=>x.id!==id))
   }
 
+  async function deleteFounder(id){
+    if(!confirm('Delete founder?')) return
+    const res = await fetch('/api/founders/'+id, { method: 'DELETE' })
+    if(!res.ok) return alert('Failed to delete founder')
+    setFounders(f=>f.filter(x=>x.id!==id))
+  }
+
   return (
     <section className="p-8">
       <div className="max-w-5xl mx-auto">
@@ -125,6 +132,7 @@ export default function AdminDashboard(){
                 <div className="flex gap-2">
                   <Link href={`/founders/${f.id}`} className="px-3 py-1 rounded border">View</Link>
                   <Link href={`/admin/founders/edit?id=${f.id}`} className="px-3 py-1 rounded border">Edit</Link>
+                  <button onClick={()=>deleteFounder(f.id)} className="px-3 py-1 rounded bg-red-600 text-white">Delete</button>
                 </div>
               </li>
             ))}

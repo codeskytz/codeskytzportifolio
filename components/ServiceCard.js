@@ -6,12 +6,10 @@ export default function ServiceCard({ service }){
 
   return (
     <div className="rounded-2xl shadow-lg bg-white dark:bg-slate-900 p-6 flex flex-col sm:flex-row gap-6 items-center" style={{minHeight: 160}}>
-      <div className="flex-shrink-0 flex items-center justify-center w-28 h-28 rounded-xl" style={{background: `${color}22`}}>
-        {/* logo can be an SVG node or a component */}
-        <div className="w-16 h-16" aria-hidden>
-          {logo}
+        <div className="flex-shrink-0 flex items-center justify-center w-28 h-28 rounded-xl" style={{background: `${color}18`, border: `1px solid ${color}33`}} aria-hidden>
+          {/* logo can be an SVG node or a component */}
+          <div className="w-16 h-16" aria-label={`${title} logo`}>{logo}</div>
         </div>
-      </div>
 
       <div className="flex-1">
         <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{title}</h3>
