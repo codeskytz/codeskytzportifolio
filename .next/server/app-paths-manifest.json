@@ -1,11 +1,10 @@
 {
-  "/api/ads/route": "app/api/ads/route.js",
-  "/api/projects/route": "app/api/projects/route.js",
   "/page": "app/page.js",
-  "/about/page": "app/about/page.js",
-  "/services/page": "app/services/page.js",
-  "/contact/page": "app/contact/page.js",
+  "/api/projects/route": "app/api/projects/route.js",
+  "/api/ads/route": "app/api/ads/route.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/api/comments/route": "app/api/comments/route.js",
-  "/services/[slug]/page": "app/services/[slug]/page.js",
-  "/reviews/page": "app/reviews/page.js"
+  "/api/founders/route": "app/api/founders/route.js",
+  "/admin/new/page": "app/admin/new/page.js"
 }
