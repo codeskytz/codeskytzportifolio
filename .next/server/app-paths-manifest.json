@@ -1,11 +1,11 @@
 {
-  "/portfolio/[id]/page": "app/portfolio/[id]/page.js",
-  "/founders/page": "app/founders/page.js",
-  "/admin/page": "app/admin/page.js",
-  "/admin/dashboard/page": "app/admin/dashboard/page.js",
-  "/api/founders/route": "app/api/founders/route.js",
-  "/admin/founders/new/page": "app/admin/founders/new/page.js",
+  "/api/ads/route": "app/api/ads/route.js",
+  "/api/projects/route": "app/api/projects/route.js",
   "/page": "app/page.js",
-  "/portfolio/page": "app/portfolio/page.js",
-  "/api/projects/route": "app/api/projects/route.js"
+  "/about/page": "app/about/page.js",
+  "/services/page": "app/services/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/api/comments/route": "app/api/comments/route.js",
+  "/services/[slug]/page": "app/services/[slug]/page.js",
+  "/reviews/page": "app/reviews/page.js"
 }

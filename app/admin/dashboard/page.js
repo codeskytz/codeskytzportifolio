@@ -25,6 +25,9 @@ export default function AdminDashboard(){
     fetchJSON('/api/projects').then(setProjects)
     fetchJSON('/api/founders').then(setFounders)
     fetchJSON('/api/comments').then(setComments)
+    // poll comments every 10s so newly submitted reviews appear
+    const iv = setInterval(()=>fetchJSON('/api/comments').then(setComments), 10000)
+    return ()=>clearInterval(iv)
   },[authed])
 
   if(!authed) return (
@@ -45,6 +48,13 @@ export default function AdminDashboard(){
     const res = await fetch('/api/comments/'+id, { method: 'DELETE' })
     if(!res.ok) return alert('Failed to delete comment')
     setComments(c=>c.filter(x=>x.id!==id))
+  }
+
+  async function deleteFounder(id){
+    if(!confirm('Delete founder?')) return
+    const res = await fetch('/api/founders/'+id, { method: 'DELETE' })
+    if(!res.ok) return alert('Failed to delete founder')
+    setFounders(f=>f.filter(x=>x.id!==id))
   }
 
   return (
@@ -125,10 +135,41 @@ export default function AdminDashboard(){
                 <div className="flex gap-2">
                   <Link href={`/founders/${f.id}`} className="px-3 py-1 rounded border">View</Link>
                   <Link href={`/admin/founders/edit?id=${f.id}`} className="px-3 py-1 rounded border">Edit</Link>
+                  <button onClick={()=>deleteFounder(f.id)} className="px-3 py-1 rounded bg-red-600 text-white">Delete</button>
                 </div>
               </li>
             ))}
           </ul>
+        </div>
+        
+        <div className="mt-8">
+          <h3 className="font-semibold">Ads</h3>
+          <div className="mt-3 p-4 border rounded bg-white dark:bg-slate-900">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <input value={newAdUrl} onChange={e=>setNewAdUrl(e.target.value)} placeholder="Image URL" className="px-3 py-2 border rounded col-span-2" />
+              <input value={newAdAlt} onChange={e=>setNewAdAlt(e.target.value)} placeholder="Alt text" className="px-3 py-2 border rounded" />
+            </div>
+            <div className="mt-2">
+              <button onClick={createAd} className="px-4 py-2 rounded bg-green-600 text-white fast-action">Add Ad</button>
+            </div>
+
+            <ul className="mt-3 space-y-2">
+              {ads.map(a=> (
+                <li key={a.id} className="p-2 border rounded flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <img src={a.url} alt={a.alt} className="w-28 h-12 object-cover rounded" />
+                    <div>
+                      <div className="font-semibold">{a.alt||'Ad'}</div>
+                      <div className="text-sm text-gray-500">{a.url}</div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button onClick={()=>deleteAd(a.id)} className="px-3 py-1 rounded bg-red-600 text-white fast-action">Delete</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

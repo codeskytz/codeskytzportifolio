@@ -55,7 +55,7 @@ export default function ProjectPage({ params }){
             </div>
 
             <div className="mt-6 flex items-center gap-4">
-              <button onClick={addLike} className="px-4 py-2 rounded bg-green-500 text-white">Like ({data.likes})</button>
+              <button onClick={addLike} className="px-4 py-2 rounded bg-green-500 text-white fast-action">Like ({data.likes})</button>
               <div className="flex items-center gap-1">
                 <span className="text-sm mr-2">Rate:</span>
                 {[1,2,3,4,5].map(n=> (
@@ -70,7 +70,7 @@ export default function ProjectPage({ params }){
               <h3 className="font-semibold">Comments</h3>
               <div className="mt-3 flex gap-2">
                 <input value={comment} onChange={(e)=>setComment(e.target.value)} placeholder="Write a comment..." className="flex-1 p-2 border rounded" />
-                <button onClick={postComment} className="px-4 py-2 rounded bg-indigo-600 text-white">Post</button>
+                <button onClick={postComment} className="px-4 py-2 rounded bg-indigo-600 text-white fast-action">Post</button>
               </div>
 
               <div className="mt-4 space-y-3">

@@ -17,7 +17,12 @@ export async function POST(req){
     const body = await req.json()
     const arr = await readData()
     const id = body.id || `f${Date.now()}`
-    const entry = { id, name: body.name||'Unnamed', position: body.position||'', story: body.story||'', image: body.image||'' }
+    // Normalize commonly used fields so frontend can read either shape
+    const name = body.name || body.fullName || 'Unnamed'
+    const position = body.position || body.role || ''
+    const story = body.story || body.bio || ''
+    const image = body.image || body.imageUrl || ''
+    const entry = { id, name, position, role: position, story, bio: story, image }
     arr.push(entry)
     await fs.writeFile(dataPath, JSON.stringify(arr, null, 2), 'utf-8')
     return new Response(JSON.stringify(entry), { status: 201 })

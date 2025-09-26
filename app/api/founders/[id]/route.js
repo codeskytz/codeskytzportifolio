@@ -17,7 +17,12 @@ export async function PUT(req, { params }){
     const arr = await readData()
     const idx = arr.findIndex(f=>f.id===params.id)
     if(idx === -1) return new Response(JSON.stringify({ error: 'not found' }), { status: 404 })
-    const updated = { ...arr[idx], ...body }
+    // Normalize fields on update
+    const name = body.name || body.fullName || arr[idx].name
+    const position = body.position || body.role || arr[idx].position || arr[idx].role
+    const story = body.story || body.bio || arr[idx].story || arr[idx].bio
+    const image = body.image || body.imageUrl || arr[idx].image
+    const updated = { ...arr[idx], ...body, name, position, role: position, story, bio: story, image }
     arr[idx] = updated
     await fs.writeFile(dataPath, JSON.stringify(arr, null, 2), 'utf-8')
     return new Response(JSON.stringify(updated), { status: 200 })

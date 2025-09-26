@@ -14,18 +14,18 @@ export default function Navbar(){
         </Link>
 
         <nav className="hidden md:flex gap-6 items-center">
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
-          <Link href="/services">Services</Link>
-          <Link href="/portfolio">Portfolio</Link>
-          <Link href="/reviews">Reviews</Link>
-          <Link href="/founders">Founders</Link>
-          <Link href="/contact">Contact</Link>
+          <Link href="/" className="fast-action fast-focus">Home</Link>
+          <Link href="/about" className="fast-action fast-focus">About</Link>
+          <Link href="/services" className="fast-action fast-focus">Services</Link>
+          <Link href="/portfolio" className="fast-action fast-focus">Portfolio</Link>
+          <Link href="/reviews" className="fast-action fast-focus">Reviews</Link>
+          <Link href="/founders" className="fast-action fast-focus">Founders</Link>
+          <Link href="/contact" className="fast-action fast-focus">Contact</Link>
         </nav>
 
         {/* Mobile menu button */}
         <div className="md:hidden">
-          <button aria-label="Toggle menu" onClick={() => setOpen(!open)} className="p-2 rounded-md border">
+          <button aria-label="Toggle menu" onClick={() => setOpen(!open)} className="p-2 rounded-md border fast-action fast-focus" type="button">
             {open ? (
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg>
             ) : (
